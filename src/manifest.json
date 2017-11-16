@@ -1,6 +1,6 @@
 {
-  "name": "my-project",
-  "short_name": "my-project",
+  "name": "Avalon-Setup",
+  "short_name": "Avalon",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
