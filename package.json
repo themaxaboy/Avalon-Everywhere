@@ -7,24 +7,9 @@
     "start": "if-env NODE_ENV=production && npm run -s serve || npm run -s dev",
     "build": "preact build",
     "serve": "preact build && preact serve",
-    "dev": "preact watch",
-    "lint": "eslint src"
+    "dev": "preact watch"
   },
-  "eslintConfig": {
-    "extends": "eslint-config-synacor",
-    "rules": {
-      "no-unused-vars": "warn",
-      "react/sort-comp": "off",
-      "lines-around-comment": "off",
-      "react/prefer-stateless-function": "off"
-    }
-  },
-  "eslintIgnore": [
-    "build/*"
-  ],
   "devDependencies": {
-    "eslint": "^4.5.0",
-    "eslint-config-synacor": "^2.0.2",
     "if-env": "^1.0.0",
     "preact-cli": "^2.0.0"
   },

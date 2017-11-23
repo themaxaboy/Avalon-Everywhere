@@ -9,8 +9,6 @@ import "preact-material-components/Button/style.css";
 import "preact-material-components/Theme/style.css";
 import style from "./style";
 
-import {Tile } from "bloomer";
-
 export default class Home extends Component {
   render() {
     return (
