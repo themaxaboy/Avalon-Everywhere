@@ -3,27 +3,31 @@ import { route } from "preact-router";
 
 import style from "./style";
 
-export default class Home extends Component {
+export default class Lobby extends Component {
   state = {
-    name: "",
-    pin: ""
+    room: ""
   };
 
   linkTo = path => () => {
     route(path);
   };
 
-  goToLobby = name => this.linkTo("/lobby/" + window.btoa(name));
+  goHome = this.linkTo("/");
+  goToRoom = room => this.linkTo("/room/" + window.btoa(room));
 
   handleChange = e => {
-    if (e.target.getAttribute("type") == "name") {
-      this.setState({ name: e.target.value });
-    } else if (e.target.getAttribute("type") == "pin") {
-      this.setState({ pin: e.target.value });
+    if (e.target.getAttribute("type") == "room") {
+      this.setState({ room: e.target.value });
     }
   };
 
-  render({}, { name, pin }) {
+  render({ name }, { room }) {
+    if (name == "anonymous") {
+      this.goHome();
+    } else {
+      name = window.atob(name);
+    }
+
     return (
       <div>
         <section class="hero is-fullheight">
@@ -32,7 +36,7 @@ export default class Home extends Component {
               <div class="column is-half is-offset-one-quarter">
                 <div class="box">
                   <h3 class="title">Avalon Everywhere</h3>
-                  <p class="subtitle">Let's start!</p>
+                  <p class="subtitle">Join -or- Create Room</p>
                   <figure class="avatar">
                     <img
                       class={style.corners}
@@ -41,41 +45,31 @@ export default class Home extends Component {
                       }
                     />
                   </figure>
-                  <br />
+                  <p class="subtitle">
+                    Hello! <b>{name}</b>
+                  </p>
                   <form>
                     <div class="field">
                       <div class="control has-icons-left">
                         <span class="icon is-small is-left">
-                          <i class="fa fa-user" />
+                          <i class="fa fa-users" />
                         </span>
                         <input
                           class="input"
-                          type="name"
-                          placeholder="Your Name"
+                          type="room"
+                          placeholder="Your Room"
                           autofocus=""
-                          value={name}
+                          value={room}
                           onInput={this.handleChange}
                         />
                       </div>
                     </div>
-                    <div class="field">
-                      <div class="control has-icons-left">
-                        <span class="icon is-small is-left">
-                          <i class="fa fa-key" />
-                        </span>
-                        <input
-                          class="input"
-                          type="pin"
-                          placeholder="Your Pin"
-                          value={pin}
-                          onInput={this.handleChange}
-                        />
-                      </div>
-                    </div>
-                    <a onClick={this.goToLobby(name)} class="button">
-                      &nbsp;Enter&nbsp;
+                    <a onClick={this.goToRoom(room)} class="button">
+                      &nbsp;Join&nbsp;
                     </a>&nbsp;&nbsp;
-                    <a class="button">Observe</a>
+                    <a onClick={this.goToRoom(room)} class="button">
+                      Create
+                    </a>
                   </form>
                 </div>
               </div>
