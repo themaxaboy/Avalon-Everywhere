@@ -35,7 +35,10 @@ export default class Lobby extends Component {
             <div class="container has-text-centered">
               <div class="column is-half is-offset-one-quarter">
                 <div class="box">
-                  <h4 class="title is-4">Avalon Everywhere</h4>
+                  <h4 class="title is-4">
+                    <img src="../../assets/icons/favicon-16x16.png" />
+                    &nbsp;Avalon Everywhere
+                  </h4>
                   <p class="subtitle">Join -or- Create Room</p>
                   <figure class="avatar">
                     <img

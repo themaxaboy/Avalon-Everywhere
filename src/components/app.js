@@ -2,14 +2,13 @@ import { h, Component } from "preact";
 import { Router } from "preact-router";
 import Helmet from "preact-helmet";
 
-import Header from "./header";
+// import Header from "./header";
 import Home from "../routes/home";
-import Profile from "../routes/profile";
+// import Profile from "../routes/profile";
 import Room from "../routes/room";
 import Lobby from "../routes/lobby";
 // import Home from 'async!../routes/home';
 // import Profile from 'async!../routes/profile';
-import style from "./style";
 
 export default class App extends Component {
   /** Gets fired when the route changes.
@@ -44,7 +43,8 @@ export default class App extends Component {
             {
               rel: "stylesheet",
               href:
-                "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+                "https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css",
+              async: "true"
             }
           ]}
         />
@@ -53,7 +53,8 @@ export default class App extends Component {
             {
               rel: "stylesheet",
               href:
-                "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css"
+                "https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.1/css/bulma.min.css",
+              async: "true"
             }
           ]}
         />
@@ -62,7 +63,8 @@ export default class App extends Component {
             {
               rel: "stylesheet",
               href:
-                "https://unpkg.com/bulmaswatch@0.5.2/lumen/bulmaswatch.min.css"
+                "https://unpkg.com/bulmaswatch@0.5.2/lumen/bulmaswatch.min.css",
+              async: "true"
             }
           ]}
         />

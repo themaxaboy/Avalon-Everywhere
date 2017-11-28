@@ -5,8 +5,8 @@ import style from "./style";
 
 export default class Room extends Component {
   state = {
-    data: "456",
-    players: 1
+    data: "123",
+    players: 5
   };
 
   linkTo = path => () => {
@@ -29,7 +29,10 @@ export default class Room extends Component {
             <div class="container has-text-centered">
               <div class="column is-half is-offset-one-quarter">
                 <div class="box">
-                  <h4 class="title is-4">Avalon Everywhere</h4>
+                  <h4 class="title is-4">
+                    <img src="../../assets/icons/favicon-16x16.png" />
+                    &nbsp;Avalon Everywhere
+                  </h4>
                   <p class="subtitle">Wait for players</p>
                   <table class="table is-narrow is-fullwidth">
                     <tbody>
