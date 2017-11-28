@@ -31,13 +31,13 @@ export default class Home extends Component {
             <div class="container has-text-centered">
               <div class="column is-half is-offset-one-quarter">
                 <div class="box">
-                  <h3 class="title">Avalon Everywhere</h3>
+                  <h4 class="title is-4">Avalon Everywhere</h4>
                   <p class="subtitle">Let's start!</p>
                   <figure class="avatar">
                     <img
                       class={style.corners}
                       src={
-                        "https://api.adorable.io/avatars/200/" + name + ".png"
+                        "https://api.adorable.io/avatars/150/" + name + ".png"
                       }
                     />
                   </figure>
@@ -72,10 +72,10 @@ export default class Home extends Component {
                         />
                       </div>
                     </div>
-                    <a onClick={this.goToLobby(name)} class="button">
+                    <a onClick={this.goToLobby(name)} class="button is-success">
                       &nbsp;Enter&nbsp;
                     </a>&nbsp;&nbsp;
-                    <a class="button">Observe</a>
+                    <a class="button is-warning">Observe</a>
                   </form>
                 </div>
               </div>

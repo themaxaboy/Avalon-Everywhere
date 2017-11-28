@@ -35,13 +35,13 @@ export default class Lobby extends Component {
             <div class="container has-text-centered">
               <div class="column is-half is-offset-one-quarter">
                 <div class="box">
-                  <h3 class="title">Avalon Everywhere</h3>
+                  <h4 class="title is-4">Avalon Everywhere</h4>
                   <p class="subtitle">Join -or- Create Room</p>
                   <figure class="avatar">
                     <img
                       class={style.corners}
                       src={
-                        "https://api.adorable.io/avatars/200/" + name + ".png"
+                        "https://api.adorable.io/avatars/150/" + name + ".png"
                       }
                     />
                   </figure>
@@ -64,10 +64,10 @@ export default class Lobby extends Component {
                         />
                       </div>
                     </div>
-                    <a onClick={this.goToRoom(room)} class="button">
+                    <a onClick={this.goToRoom(room)} class="button is-success">
                       &nbsp;Join&nbsp;
                     </a>&nbsp;&nbsp;
-                    <a onClick={this.goToRoom(room)} class="button">
+                    <a onClick={this.goToRoom(room)} class="button is-warning">
                       Create
                     </a>
                   </form>

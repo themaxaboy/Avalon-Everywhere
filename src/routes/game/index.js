@@ -28,7 +28,7 @@ export default class Game extends Component {
             <div class="container has-text-centered">
               <div class="column is-half is-offset-one-quarter">
                 <div class="box">
-                  <h3 class="title">Avalon Everywhere</h3>
+                  <h4 class="title is-4">Avalon Everywhere</h4>
                   <p class="subtitle">Wait for players</p>
                   <article class="media">
                     <div class="media-left">
@@ -36,7 +36,7 @@ export default class Game extends Component {
                         <img
                           class={style.corners}
                           src={
-                            "https://api.adorable.io/avatars/20/" +
+                            "https://api.adorable.io/avatars/150/" +
                             data +
                             ".png"
                           }
