@@ -1,19 +1,55 @@
 import { h, Component } from "preact";
 import { route } from "preact-router";
+import fire from "../../components/fire";
 
 import style from "./style";
 
 export default class Home extends Component {
   state = {
     name: "",
-    pin: ""
+    pin: "",
+    status: ""
   };
 
-  linkTo = path => () => {
-    route(path);
+  checkUser = () => {
+    fire
+      .database()
+      .ref("Users/" + this.state.name)
+      .once("value")
+      .then(snapshot => {
+        if (snapshot.val()) {
+          console.log(snapshot.val());
+          if (snapshot.val().pin == this.state.pin) {
+            this.loginWithPin();
+          } else {
+            this.setState({ status: "loginError" });
+          }
+        } else {
+          this.registerNewUser();
+          this.loginWithPin();
+        }
+      });
   };
 
-  goToLobby = name => this.linkTo("/lobby/" + window.btoa(name));
+  registerNewUser = () => {
+    fire
+      .database()
+      .ref("Users/" + this.state.name)
+      .set({
+        name: this.state.name,
+        pin: this.state.pin,
+        lastLogin: Date.now(),
+        state: "Logon"
+      });
+  };
+
+  loginWithPin = () => {
+    route("/lobby/" + window.btoa(this.state.name));
+  };
+
+  handleEnter = () => {
+    this.checkUser();
+  };
 
   handleChange = e => {
     if (e.target.getAttribute("type") == "name") {
@@ -75,7 +111,7 @@ export default class Home extends Component {
                         />
                       </div>
                     </div>
-                    <a onClick={this.goToLobby(name)} class="button is-success">
+                    <a onClick={this.handleEnter} class="button is-success">
                       &nbsp;Enter&nbsp;
                     </a>&nbsp;&nbsp;
                     <a class="button is-warning">Observe</a>

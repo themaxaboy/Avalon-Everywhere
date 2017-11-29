@@ -63,3 +63,4 @@ typings/
 # lock files
 yarn.lock
 package-lock.json
+src/components/fire.js
