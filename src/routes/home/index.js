@@ -1,15 +1,46 @@
 import { h, Component } from "preact";
 import { route } from "preact-router";
+import { instanceOf } from "prop-types";
+import { withCookies, Cookies } from "react-cookie";
+import swal from "sweetalert2";
 import fire from "../../components/fire";
 
 import style from "./style";
 
-export default class Home extends Component {
+class Home extends Component {
   state = {
     name: "",
-    pin: "",
-    status: ""
+    pin: ""
   };
+
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
+
+  componentWillMount() {
+    const { cookies } = this.props;
+
+    this.state = {
+      name: cookies.get("name") || "",
+      pin: cookies.get("pin") || ""
+    };
+
+    console.log("cookies : " + JSON.stringify(this.state));
+  }
+
+  handleNameChange(name) {
+    const { cookies } = this.props;
+
+    cookies.set("name", name, { path: "/" });
+    this.setState({ name });
+  }
+
+  handlePinChange(pin) {
+    const { cookies } = this.props;
+
+    cookies.set("pin", pin, { path: "/" });
+    this.setState({ pin });
+  }
 
   checkUser = () => {
     fire
@@ -18,14 +49,19 @@ export default class Home extends Component {
       .once("value")
       .then(snapshot => {
         if (snapshot.val()) {
-          console.log(snapshot.val());
+          //console.log(snapshot.val());
           if (snapshot.val().pin == this.state.pin) {
+            console.log("Old User.");
             this.loginWithPin();
           } else {
-            this.setState({ status: "loginError" });
+            this.setState({ name: "", pin: "" });
+            swal("Oops...", "Something went wrong! PIN is incorrect.", "error");
+            console.log("Login Error.");
+            return;
           }
         } else {
           this.registerNewUser();
+          console.log("New User.");
           this.loginWithPin();
         }
       });
@@ -53,9 +89,9 @@ export default class Home extends Component {
 
   handleChange = e => {
     if (e.target.getAttribute("type") == "name") {
-      this.setState({ name: e.target.value });
+      this.handleNameChange(e.target.value);
     } else if (e.target.getAttribute("type") == "pin") {
-      this.setState({ pin: e.target.value });
+      this.handlePinChange(e.target.value);
     }
   };
 
@@ -105,7 +141,7 @@ export default class Home extends Component {
                         <input
                           class="input"
                           type="pin"
-                          placeholder="Your Pin"
+                          placeholder="Your PIN"
                           value={pin}
                           onInput={this.handleChange}
                         />
@@ -125,3 +161,5 @@ export default class Home extends Component {
     );
   }
 }
+
+export default withCookies(Home);

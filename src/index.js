@@ -1,4 +1,10 @@
-//import './style';
-import App from './components/app';
+import App from "./components/app";
+import { CookiesProvider } from "react-cookie";
 
-export default App;
+export default function Root() {
+  return (
+    <CookiesProvider>
+      <App />
+    </CookiesProvider>
+  );
+}

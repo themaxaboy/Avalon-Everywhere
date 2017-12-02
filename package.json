@@ -20,6 +20,8 @@
     "preact-compat": "^3.17.0",
     "preact-helmet": "^4.0.0-alpha-3",
     "preact-material-components": "^1.2.4",
-    "preact-router": "^2.5.5"
+    "preact-router": "^2.5.5",
+    "react-cookie": "^2.1.2",
+    "sweetalert2": "^7.0.6"
   }
 }

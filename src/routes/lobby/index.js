@@ -1,12 +1,43 @@
 import { h, Component } from "preact";
 import { route } from "preact-router";
+import { instanceOf } from "prop-types";
+import { withCookies, Cookies } from "react-cookie";
+import swal from "sweetalert2";
+import fire from "../../components/fire";
 
 import style from "./style";
 
-export default class Lobby extends Component {
+class Lobby extends Component {
   state = {
-    room: ""
+    room: "",
+    name: ""
   };
+
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
+
+  componentWillMount() {
+    const { cookies } = this.props;
+
+    this.state = {
+      name: cookies.get("name") || "",
+      pin: cookies.get("pin") || ""
+    };
+
+    if (this.state.name == "") {
+      this.goHome();
+    }
+
+    console.log("cookies : " + JSON.stringify(this.state));
+  }
+
+  handleRoomChange(room) {
+    const { cookies } = this.props;
+
+    cookies.set("room", room, { path: "/" });
+    this.setState({ room });
+  }
 
   linkTo = path => () => {
     route(path);
@@ -17,8 +48,43 @@ export default class Lobby extends Component {
 
   handleChange = e => {
     if (e.target.getAttribute("type") == "room") {
-      this.setState({ room: e.target.value });
+      this.handleRoomChange(e.target.value);
     }
+  };
+
+  handleJoin = () => {
+    if (this.state.room == "" || this.state.room == undefined) {
+      swal("Oops...", "Something went wrong! Room is incorrect.", "error");
+      return;
+    } else {
+      fire
+        .database()
+        .ref("Room/" + this.state.room)
+        .once("value")
+        .then(snapshot => {
+          if (snapshot.val()) {
+            route("/room/" + window.btoa(this.state.room));
+          } else {
+            swal(
+              "Oops...",
+              "Something went wrong! Room is incorrect.",
+              "error"
+            );
+            this.setState({ room: "" });
+          }
+        });
+    }
+  };
+
+  handleCreate = () => {
+    route(
+      "/room/" +
+        window.btoa(
+          Date.now()
+            .toString()
+            .slice(7, 13)
+        )
+    );
   };
 
   render({ name }, { room }) {
@@ -67,10 +133,10 @@ export default class Lobby extends Component {
                         />
                       </div>
                     </div>
-                    <a onClick={this.goToRoom(room)} class="button is-success">
+                    <a onClick={this.handleJoin} class="button is-success">
                       &nbsp;Join&nbsp;
                     </a>&nbsp;&nbsp;
-                    <a onClick={this.goToRoom(room)} class="button is-warning">
+                    <a onClick={this.handleCreate} class="button is-warning">
                       Create
                     </a>
                   </form>
@@ -83,3 +149,5 @@ export default class Lobby extends Component {
     );
   }
 }
+
+export default withCookies(Lobby);

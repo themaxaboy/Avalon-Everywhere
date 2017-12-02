@@ -3,10 +3,9 @@ import { Router } from "preact-router";
 import Helmet from "preact-helmet";
 
 // import Header from "./header";
-import Home from "../routes/home";
-// import Profile from "../routes/profile";
-import Room from "../routes/room";
-import Lobby from "../routes/lobby";
+import Home from "async!../routes/home";
+import Room from "async!../routes/room";
+import Lobby from "async!../routes/lobby";
 // import Home from 'async!../routes/home';
 // import Profile from 'async!../routes/profile';
 
@@ -68,12 +67,8 @@ export default class App extends Component {
             }
           ]}
         />
-
-        {/* <Header /> */}
         <Router onChange={this.handleRoute}>
           <Home path="/" />
-          {/* <Profile path="/profile/" user="me" />
-          <Profile path="/profile/:user" /> */}
           <Room path="/room/" room="anonymous" />
           <Room path="/room/:room" />
           <Lobby path="/lobby/" name="anonymous" />
