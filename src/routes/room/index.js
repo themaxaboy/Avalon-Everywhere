@@ -1,13 +1,35 @@
 import { h, Component } from "preact";
 import { route } from "preact-router";
+import { instanceOf } from "prop-types";
+import { withCookies, Cookies } from "react-cookie";
 
 import style from "./style";
 
-export default class Room extends Component {
+class Room extends Component {
   state = {
     data: "123",
     players: 5
   };
+
+  static propTypes = {
+    cookies: instanceOf(Cookies).isRequired
+  };
+
+  componentWillMount() {
+    const { cookies } = this.props;
+
+    this.state = {
+      name: cookies.get("name") || "",
+      pin: cookies.get("pin") || "",
+      room: cookies.get("room") || ""
+    };
+
+    console.log("cookies : " + JSON.stringify(this.state));
+
+    if (this.state.name == "") {
+      this.goHome();
+    }
+  }
 
   linkTo = path => () => {
     route(path);
@@ -126,3 +148,5 @@ export default class Room extends Component {
     );
   }
 }
+
+export default withCookies(Room);

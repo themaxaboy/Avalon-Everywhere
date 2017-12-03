@@ -25,11 +25,11 @@ class Lobby extends Component {
       pin: cookies.get("pin") || ""
     };
 
+    console.log("cookies : " + JSON.stringify(this.state));
+
     if (this.state.name == "") {
       this.goHome();
     }
-
-    console.log("cookies : " + JSON.stringify(this.state));
   }
 
   handleRoomChange(room) {
@@ -44,7 +44,6 @@ class Lobby extends Component {
   };
 
   goHome = this.linkTo("/");
-  goToRoom = room => this.linkTo("/room/" + window.btoa(room));
 
   handleChange = e => {
     if (e.target.getAttribute("type") == "room") {
@@ -77,14 +76,37 @@ class Lobby extends Component {
   };
 
   handleCreate = () => {
-    route(
-      "/room/" +
-        window.btoa(
-          Date.now()
-            .toString()
-            .slice(7, 13)
-        )
-    );
+    let room = Date.now()
+      .toString()
+      .slice(7, 13);
+    fire
+      .database()
+      .ref("Room/" + room)
+      .set({
+        
+        Mission: 0,
+        Round: 0,
+        MissionInfo: {
+          1: "",
+          2: "",
+          3: "",
+          4: "",
+          5: ""
+        },
+        Role: {
+          Merlin: ""
+        },
+        Score: {
+          Resistance: 0,
+          Spy: 0
+        },
+        Users: {
+          [this.state.name]: "Admin"
+        },
+        Status: "Waiting"
+      });
+
+    route("/room/" + window.btoa(room));
   };
 
   render({ name }, { room }) {
